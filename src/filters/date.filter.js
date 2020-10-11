@@ -1,6 +1,5 @@
 // eslint-disable-next-line no-unused-vars
 export default function dateFilter(value, format = 'date') {
-  console.log('val', value);
   const options = {};
 
   if (format.includes('date')) {
