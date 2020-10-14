@@ -63,8 +63,13 @@ export default {
     }
   },
   methods: {
-    logout() {
-      this.$router.push('/login?message=logout');
+    async logout() {
+      try {
+        await this.$store.dispatch('logout');
+        this.$router.push('/login?message=logout');
+      } catch (err) {
+        console.log('err', err);
+      }
     },
   },
 };
