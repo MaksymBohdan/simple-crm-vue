@@ -109,11 +109,19 @@ export default {
     agreed: { checked: (value) => !!value },
   },
   methods: {
-    onSubmit() {
+    async onSubmit() {
       if (this.$v.$invalid) {
         this.$v.$touch();
         return;
       }
+
+      const registerCredentials = {
+        email: this.email,
+        password: this.password,
+        name: this.name,
+      };
+
+      await this.$store.dispatch('register', registerCredentials);
 
       this.$router.push('/');
     },

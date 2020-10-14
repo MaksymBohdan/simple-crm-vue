@@ -87,13 +87,19 @@ export default {
     }
   },
   methods: {
-    onSubmit() {
+    async onSubmit() {
       if (this.$v.$invalid) {
         this.$v.$touch();
         return;
       }
 
-      this.$router.push('/');
+      const loginCredentials = { email: this.email, password: this.password };
+
+      try {
+        await this.$store.dispatch('login', loginCredentials);
+        this.$router.push('/');
+        // eslint-disable-next-line no-empty
+      } catch (err) {}
     },
   },
 };
