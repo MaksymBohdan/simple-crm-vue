@@ -33,6 +33,7 @@ export default {
     async logout({ commit }) {
       try {
         await firebase.auth().signOut();
+        commit('clearInfo');
       } catch (err) {
         commit('setError', err);
         throw err;
