@@ -16,7 +16,7 @@
             data-target="dropdown"
             ref="dropdown"
           >
-            USER NAME
+            {{ name }}
             <i class="material-icons right">arrow_drop_down</i>
           </a>
 
@@ -70,6 +70,11 @@ export default {
       } catch (err) {
         console.log('err', err);
       }
+    },
+  },
+  computed: {
+    name() {
+      return this.$store.getters.info.name;
     },
   },
 };
