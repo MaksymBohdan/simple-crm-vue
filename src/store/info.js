@@ -28,6 +28,23 @@ export default {
         commit('setError', err);
       }
     },
+
+    async updateInfo({ dispatch, commit, getters }, infoToUpdate) {
+      try {
+        const uid = await dispatch('getUid');
+        const updateData = { ...getters.info, ...infoToUpdate };
+
+        await firebase
+          .database()
+          .ref(`/users/${uid}/info`)
+          .update(updateData);
+
+        commit('setInfo', updateData);
+      } catch (e) {
+        commit('setError', e);
+        throw e;
+      }
+    },
   },
   getters: {
     info: ({ info }) => info,
