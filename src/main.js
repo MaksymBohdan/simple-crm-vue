@@ -7,6 +7,7 @@ import 'firebase/database';
 import App from './App.vue';
 import Loader from './components/Loader.vue';
 import messagePlugin from '@/utils/message.plugin';
+import tooltipDirective from '@/directives/tooltip.directive';
 import router from './router';
 import store from './store';
 import dateFilter from '@/filters/date.filter';
@@ -18,7 +19,7 @@ Vue.config.productionTip = false;
 Vue.use(Vuelidate);
 Vue.use(messagePlugin);
 Vue.component('Loader', Loader);
-
+Vue.directive('tooltip', tooltipDirective);
 Vue.filter('date', dateFilter);
 Vue.filter('currency', currencyFilter);
 
