@@ -79,7 +79,7 @@ export default {
           title: this.title,
           limit: this.limit,
         });
-        console.log('aaaa', category);
+
         this.title = '';
         this.limit = '1';
         this.$v.$reset();
