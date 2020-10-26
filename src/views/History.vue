@@ -1,52 +1,51 @@
 <template>
   <div>
     <div class="page-title">
-      <h3>Счет</h3>
-
-      <button class="btn waves-effect waves-light btn-small">
-        <i class="material-icons">refresh</i>
-      </button>
+      <h3>История записей</h3>
     </div>
 
-    <div class="row">
-      <div class="col s12 m6 l4">
-        <div class="card light-blue bill-card">
-          <div class="card-content white-text">
-            <span class="card-title">Счет в валюте</span>
-
-            <p class="currency-line">
-              <span>12.0 Р</span>
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col s12 m6 l8">
-        <div class="card orange darken-3 bill-card">
-          <div class="card-content white-text">
-            <div class="card-header">
-              <span class="card-title">Курс валют</span>
-            </div>
-            <table>
-              <thead>
-                <tr>
-                  <th>Валюта</th>
-                  <th>Курс</th>
-                  <th>Дата</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <tr>
-                  <td>руб</td>
-                  <td>12121</td>
-                  <td>12.12.12</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+    <div class="history-chart">
+      <canvas></canvas>
     </div>
+
+    <Loader v-if="loading" />
+
+    <p class="center" v-else-if="!records.length">Записей нет</p>
+
+    <section v-else>
+      <HistoryTable :records="records" />
+    </section>
   </div>
 </template>
+
+<script>
+import HistoryTable from '@/components/HistoryTable.vue';
+
+export default {
+  name: 'History',
+  data() {
+    return {
+      loading: true,
+      categories: [],
+      records: [],
+    };
+  },
+  components: {
+    HistoryTable,
+  },
+
+  async mounted() {
+    const records = await this.$store.dispatch('fetchRecords');
+    this.categories = await this.$store.dispatch('fetchCategories');
+    this.records = records.map((record) => ({
+      ...record,
+      categoryName: this.categories.find((c) => c.id === record.categoryId)
+        .title,
+      typeClass: record.type === 'income' ? 'green' : 'red',
+      typeText: record.type === 'income' ? 'Доход' : 'Расход',
+    }));
+
+    this.loading = false;
+  },
+};
+</script>
