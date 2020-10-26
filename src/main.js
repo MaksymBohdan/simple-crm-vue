@@ -12,6 +12,7 @@ import router from './router';
 import store from './store';
 import dateFilter from '@/filters/date.filter';
 import currencyFilter from '@/filters/currency.filter';
+import Paginate from 'vuejs-paginate';
 
 import 'materialize-css/dist/js/materialize.min';
 
@@ -19,9 +20,12 @@ Vue.config.productionTip = false;
 Vue.use(Vuelidate);
 Vue.use(messagePlugin);
 Vue.component('Loader', Loader);
+Vue.component('paginate', Paginate);
 Vue.directive('tooltip', tooltipDirective);
 Vue.filter('date', dateFilter);
 Vue.filter('currency', currencyFilter);
+
+Vue.component('paginate', Paginate);
 
 firebase.initializeApp({
   apiKey: 'AIzaSyBQbJZVEX1T-xSK1uSP4Gqoq9ATuFf1Y84',
