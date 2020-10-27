@@ -2,11 +2,13 @@
 import Vue from 'vue';
 import Vuelidate from 'vuelidate';
 import firebase from 'firebase/app';
+import VueMeta from 'vue-meta';
 import 'firebase/auth';
 import 'firebase/database';
 import App from './App.vue';
 import Loader from './components/Loader.vue';
 import messagePlugin from '@/utils/message.plugin';
+import titlePlugin from '@/utils/title.plugin';
 import tooltipDirective from '@/directives/tooltip.directive';
 import router from './router';
 import store from './store';
@@ -21,6 +23,11 @@ import 'materialize-css/dist/js/materialize.min';
 Vue.config.productionTip = false;
 Vue.use(Vuelidate);
 Vue.use(messagePlugin);
+Vue.use(titlePlugin);
+Vue.use(VueMeta, {
+  // optional pluginOptions
+  refreshOnceOnNavigation: true,
+});
 Vue.component('Loader', Loader);
 Vue.component('paginate', Paginate);
 Vue.directive('tooltip', tooltipDirective);
