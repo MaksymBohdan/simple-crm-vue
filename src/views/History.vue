@@ -5,7 +5,7 @@
     </div>
 
     <div class="history-chart">
-      <canvas></canvas>
+      <canvas ref="canvas"></canvas>
     </div>
 
     <Loader v-if="loading" />
@@ -30,11 +30,17 @@
 </template>
 
 <script>
+/* eslint-disable no-param-reassign */
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable function-paren-newline */
+
+import { Pie } from 'vue-chartjs';
 import paginationMixin from '@/mixins/pagination.mixin';
 import HistoryTable from '@/components/HistoryTable.vue';
 
 export default {
   name: 'History',
+  extends: Pie,
   mixins: [paginationMixin],
   data() {
     return {
@@ -49,15 +55,41 @@ export default {
   async mounted() {
     this.records = await this.$store.dispatch('fetchRecords');
     const categories = await this.$store.dispatch('fetchCategories');
-    const modifiedRecords = this.records.map((record) => ({
-      ...record,
-      categoryName: categories.find((c) => c.id === record.categoryId).title,
-      typeClass: record.type === 'income' ? 'green' : 'red',
-      typeText: record.type === 'income' ? 'Доход' : 'Расход',
-    }));
 
-    this.setupPagination(modifiedRecords);
+    this.setup(categories);
+
     this.loading = false;
+  },
+
+  methods: {
+    setup(categories) {
+      const modifiedRecords = this.records.map((record) => ({
+        ...record,
+        categoryName: categories.find((c) => c.id === record.categoryId).title,
+        typeClass: record.type === 'income' ? 'green' : 'red',
+        typeText: record.type === 'income' ? 'Доход' : 'Расход',
+      }));
+
+      this.setupPagination(modifiedRecords);
+
+      this.renderChart({
+        labels: categories.map(({ title }) => title),
+        datasets: [
+          {
+            label: 'Расходы по категориями',
+            backgroundColor: ['#f87979', '#4caf50', '#b3e5fc'],
+            data: categories.map((c) =>
+              this.records.reduce((acc, r) => {
+                if (r.categoryId === c.id && r.type === 'outcome') {
+                  acc += r.amount;
+                }
+                return acc;
+              }, 0),
+            ),
+          },
+        ],
+      });
+    },
   },
 };
 </script>
