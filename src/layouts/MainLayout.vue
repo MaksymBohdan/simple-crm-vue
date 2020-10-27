@@ -4,7 +4,7 @@
 
     <div v-else class="app-main-layout">
       <Navbar @click="isOpen = !isOpen" />
-      <Sidebar v-model="isOpen" />
+      <Sidebar v-model="isOpen" :key="locale" />
 
       <main class="app-content" :class="{ full: !isOpen }">
         <div class="app-page">
@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import messages from '@/utils/messages';
+
 import Navbar from '@/components/app/Navbar.vue';
 import Sidebar from '@/components/app/Sidebar.vue';
 
@@ -44,6 +46,20 @@ export default {
       await this.$store.dispatch('fetchInfo');
     }
     this.loading = false;
+  },
+
+  computed: {
+    error() {
+      return this.$store.getters.error;
+    },
+    locale() {
+      return this.$store.getters.info.locale;
+    },
+  },
+  watch: {
+    error(errFb) {
+      this.$error(messages[errFb.code]);
+    },
   },
 };
 </script>

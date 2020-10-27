@@ -1,0 +1,11 @@
+{
+  "profileTitle": "Профиль",
+  "name": "Имя",
+  "enterName": "Введите имя",
+  "update": "Обновить",
+  "menu_bill": "Счет",
+  "menu_history": "История",
+  "menu_planning": "Планирование",
+  "menu_newRecord": "Новая запись",
+  "menu_categories": "Категории"
+}
