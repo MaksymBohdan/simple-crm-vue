@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import localizeFilter from '@/filters/localize.filter';
+
 export default {
   name: 'Sidebar',
 
@@ -21,11 +23,11 @@ export default {
   data() {
     return {
       routes: [
-        { path: '/', name: 'Счет', exact: true },
-        { path: '/history', name: 'История' },
-        { path: '/planning', name: 'Планирование' },
-        { path: '/record', name: 'Новая запись' },
-        { path: '/categories', name: 'Категории' },
+        { path: '/', name: localizeFilter('menu_bill'), exact: true },
+        { path: '/history', name: localizeFilter('menu_history') },
+        { path: '/planning', name: localizeFilter('menu_planning') },
+        { path: '/record', name: localizeFilter('menu_newRecord') },
+        { path: '/categories', name: localizeFilter('menu_categories') },
       ],
     };
   },
