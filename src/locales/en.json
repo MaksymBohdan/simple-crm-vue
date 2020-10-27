@@ -7,5 +7,8 @@
   "menu_history": "History",
   "menu_planning": "Planning",
   "menu_newRecord": "New record",
-  "menu_categories": "Categories"
+  "menu_categories": "Categories",
+  "menu_home": "Home page",
+  "login": "Login",
+  "registration": "Registration"
 }

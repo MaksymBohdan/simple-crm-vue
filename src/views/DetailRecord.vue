@@ -31,6 +31,9 @@
 
 <script>
 export default {
+  metaInfo() {
+    return { title: this.$title('menu_newRecord') };
+  },
   name: 'RetailRecord',
   data() {
     return {
